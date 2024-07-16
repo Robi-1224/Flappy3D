@@ -10,6 +10,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] bool canFlap;
     private float flappingCooldown = 0;
     [SerializeField] float coolDown;
+
+    [SerializeField] Transform lookPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,20 +25,12 @@ public class PlayerControl : MonoBehaviour
         
     }
 
-   
-
-    public void PlayerFlappingRotation()
-    {
-        gameObject.transform.rotation = Quaternion.Euler(-18,90,0);
-    }
-
 
     private void PlayerFlapping()
     {
 
-        Quaternion.Slerp(gameObject.transform.rotation, Quaternion.Euler(18, 90, 0), 50) ;
+        rb.transform.LookAt(lookPoint);
         
-        Debug.Log(flappingCooldown);
         if(!canFlap )
         {
             flappingCooldown += Time.deltaTime;
@@ -49,8 +43,11 @@ public class PlayerControl : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
+       
+
             if (canFlap)
             {
+                
                 rb.velocity = Vector3.zero;
                 rb.AddForce(0, force, 0, ForceMode.Impulse);
                 flappingCooldown = 0;

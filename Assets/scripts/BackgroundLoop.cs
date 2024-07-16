@@ -9,6 +9,7 @@ public class BackgroundLoop : MonoBehaviour
     private int backgroundIndex = 0;
 
     private RectTransform currentImage;
+    [SerializeField] float loop;
    
     // Start is called before the first frame update
     void Awake()
@@ -37,14 +38,14 @@ public class BackgroundLoop : MonoBehaviour
 
     private IEnumerator BackgroundLooping()
     {
-         WaitForSeconds wait = new WaitForSeconds(8);
+         WaitForSeconds wait = new WaitForSeconds(loop);
 
         while (true)
         {
             if (currentImage != null)
             {
-                SetLeft(currentImage, -500);
-                SetRight(currentImage, -500);
+                SetLeft(currentImage, -800);
+                SetRight(currentImage, -800);
             }
             else
             {
