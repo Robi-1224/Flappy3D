@@ -5,13 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameManager
-  - CharacterSelectController
-  - Gold
+  - ScreenBorder
+  - ScreenBorderBottom
+  - ScreenBorderTop
+  - Obstacle
   - ElectricObstacle
-  - FireObstacle
-  - IceObstacle
-  - NormalObstacle
-  - TheGround
   layers:
   - Default
   - TransparentFX
