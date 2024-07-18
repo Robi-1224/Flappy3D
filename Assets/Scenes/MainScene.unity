@@ -1337,7 +1337,7 @@ GameObject:
   - component: {fileID: 1225477252}
   - component: {fileID: 1225477251}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Top Border
   m_TagString: ScreenBorderTop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1723,7 @@ GameObject:
   - component: {fileID: 2147457824}
   - component: {fileID: 2147457823}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Bottom border
   m_TagString: ScreenBorderBottom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

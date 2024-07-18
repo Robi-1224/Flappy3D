@@ -8,11 +8,22 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] GameObject spawnPoint;
     [SerializeField] float timeToSpawn;
     private Vector3 randomSpawnYPos;
+   
+
+    private ButtonManager buttonManager;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawningObstacles());
-       
+        if(buttonManager.isPaused)
+        {
+            StopAllCoroutines();
+        }
+        else
+        {
+           StartCoroutine(SpawningObstacles());
+        }
+      
+       buttonManager = FindAnyObjectByType<ButtonManager>();
     }
 
     // Update is called once per frame
@@ -29,7 +40,7 @@ public class ObstacleSpawner : MonoBehaviour
             randomSpawnYPos = new Vector3(spawnPoint.transform.position.x,Random.Range(-5, 5), spawnPoint.transform.position.z);
             
             WaitForSeconds wait = new WaitForSeconds(timeToSpawn);
-            var obstacles = Instantiate(obstacle, spawnPoint.transform.position, Quaternion.identity);
+        var obstacles = Instantiate(obstacle, spawnPoint.transform.position, Quaternion.identity);
             obstacles.transform.position = randomSpawnYPos;
             Destroy(obstacles, 5f);
             obstacles.transform.SetParent(spawnPoint.transform);
