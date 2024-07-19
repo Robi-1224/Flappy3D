@@ -15,6 +15,7 @@ public class SaveScoreScript : MonoBehaviour
         score = GetComponent<Score>();
         savePath = Application.persistentDataPath + "/highscore.save";
         LoadData();
+        
 
 
     }
@@ -59,8 +60,13 @@ public class SaveScoreScript : MonoBehaviour
             }
 
             score.highScore = save.savedHighScore;
+       
 
             Debug.Log("Highscore Loaded");
+        }
+        else
+        {
+            Debug.Log("HighScore not found");
         }
         
 

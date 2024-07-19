@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Score : MonoBehaviour
 {
@@ -12,18 +13,23 @@ public class Score : MonoBehaviour
     public int endScore;
     public int highScore;
     private SaveScoreScript saveScoreScript;
+    private PlayerControl playerControl;
     // Start is called before the first frame update
     void Start()
     {
         saveScoreScript = FindAnyObjectByType<SaveScoreScript>();
+        playerControl = FindAnyObjectByType<PlayerControl>();
         saveScoreScript.LoadData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreTex.text = "Score: " + score;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene")){
+            scoreTex.text = "Score: " + score;
+        }
     }
+       
 
     public void ScoreUpdate(int amount)
     {
@@ -39,6 +45,7 @@ public class Score : MonoBehaviour
         {
             highScore = endScore;
             highScoreObject.SetActive(true);
+            playerControl.gameOverHighscoreText.enabled = false;
             saveScoreScript.SaveData();
           
             highScoreText.text = "You have a new HighScore: " + highScore;

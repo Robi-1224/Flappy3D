@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float coolDown;
 
     [SerializeField] GameObject gameOverScreen;
-
+    public TextMeshProUGUI gameOverHighscoreText;
     [SerializeField] Transform lookPoint;
     public bool gameOver = false;
 
@@ -23,21 +24,30 @@ public class PlayerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         score = FindAnyObjectByType<Score>();
-       script = FindAnyObjectByType<SaveScoreScript>();
-        
+        script = FindAnyObjectByType<SaveScoreScript>();
+
+        if (gameOverHighscoreText == null)
+        {
+            gameOverHighscoreText = GameObject.Find("Current Highscore").GetComponent<TextMeshProUGUI>();
+        }
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerFlapping();
+        
 
         if (gameOver)
         {
+             
             gameOverScreen.SetActive(true);
+            gameOverHighscoreText.text = "Current Highscore: "+score.highScore;
             score.endScore = score.score;
             score.HighScore();
-           
+
         }
     }
 

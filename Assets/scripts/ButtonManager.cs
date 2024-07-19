@@ -1,19 +1,32 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
+
+[RequireComponent(typeof(SaveScoreScript))]
 
 public class ButtonManager : MonoBehaviour
 {
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject pausedPanel;
+    [SerializeField] GameObject highscorePanel;
+    [SerializeField] GameObject background;
+    [SerializeField] TextMeshProUGUI highscoreText;
+
     private PlayerControl playerControl;
+    private Score score;
+    private SaveScoreScript saveScore;
    
     public bool isPaused = false;
 
     private void Start()
     {
         playerControl = FindAnyObjectByType<PlayerControl>();
+       score = FindAnyObjectByType<Score>();
+        saveScore = GetComponent<SaveScoreScript>();
       
     }
     private void Update()
@@ -60,6 +73,25 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+    public void HighScorePanel()
+    {
+        highscorePanel.SetActive(true);
+        highscoreText.text = score.highScore + " " + "Points!";
+    }
+
+    public void HighScoreQuit()
+    {
+        highscorePanel.SetActive(false);
+    }
+
+    public void HighScoreReset()
+    {
+        score.highScore = 0;
+        
+        saveScore.SaveData();
+        HighScorePanel();
+    }
+
     private void pauseGame()
     {
        
@@ -68,6 +100,7 @@ public class ButtonManager : MonoBehaviour
             if (Input.GetKey(KeyCode.Escape))
             {
                 isPaused = true;
+                background.GetComponent<Movement>().enabled= false;
                 pausedPanel.SetActive(true);
 
                 playerControl.gameObject.GetComponent<Rigidbody>().useGravity = false;
@@ -79,6 +112,9 @@ public class ButtonManager : MonoBehaviour
 
             if (!isPaused)
             {
+
+              background.GetComponent<Movement>().enabled= true;
+
                if(!playerControl.gameOver) { 
                     
                 playerControl.enabled = true;
