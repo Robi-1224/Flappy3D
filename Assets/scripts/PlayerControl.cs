@@ -15,10 +15,13 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] Transform lookPoint;
     public bool gameOver = false;
+
+    private Score score;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        score = FindAnyObjectByType<Score>();
        
     }
 
@@ -27,6 +30,13 @@ public class PlayerControl : MonoBehaviour
     {
         PlayerFlapping();
 
+        if (gameOver)
+        {
+            gameOverScreen.SetActive(true);
+            score.endScore = score.score;
+            score.HighScore();
+           
+        }
     }
 
 
@@ -85,20 +95,32 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
            
-            Destroy(gameObject, .2f);
+            Destroy(gameObject, .01f);
             gameOver = true;
         }
-        else if (collision.gameObject.CompareTag("ElectricObstacle"))
+        
+        if (collision.gameObject.CompareTag("ElectricObstacle"))
         {
-            gameObject.SetActive(false);
-            Destroy(gameObject,.2f);
-            gameOver=true;
+            gameOver = true;
+            Destroy(gameObject,.01f);
             
+            
+        }
+
+       
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("ScoreBox"))
+        {
+            score.ScoreUpdate(1);
         }
     }
 
 
-    
+
 }
 
 

@@ -10,6 +10,7 @@ TagManager:
   - ScreenBorderTop
   - Obstacle
   - ElectricObstacle
+  - ScoreBox
   layers:
   - Default
   - TransparentFX
