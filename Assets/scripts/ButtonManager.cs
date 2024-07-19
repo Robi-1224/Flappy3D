@@ -73,6 +73,7 @@ public class ButtonManager : MonoBehaviour
                 playerControl.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 playerControl.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerControl.enabled = false;
+                
           
             }
 

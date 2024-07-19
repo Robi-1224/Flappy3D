@@ -17,12 +17,14 @@ public class PlayerControl : MonoBehaviour
     public bool gameOver = false;
 
     private Score score;
+    private SaveScoreScript script;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         score = FindAnyObjectByType<Score>();
-       
+       script = FindAnyObjectByType<SaveScoreScript>();
+        
     }
 
     // Update is called once per frame

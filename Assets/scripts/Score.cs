@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    public float score = 0;
+    public int score = 0;
     [SerializeField] TextMeshProUGUI scoreTex;
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] GameObject highScoreObject;
-    public float endScore;
-    public float highScore;
+    public int endScore;
+    public int highScore;
     private SaveScoreScript saveScoreScript;
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,8 @@ public class Score : MonoBehaviour
     public void ScoreUpdate(int amount)
     {
         score += amount;
-        
+       
+
     }
 
     public void HighScore()
@@ -39,6 +40,7 @@ public class Score : MonoBehaviour
             highScore = endScore;
             highScoreObject.SetActive(true);
             saveScoreScript.SaveData();
+          
             highScoreText.text = "You have a new HighScore: " + highScore;
         }
 

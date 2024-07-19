@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -9,11 +8,15 @@ public class SaveScoreScript : MonoBehaviour
 {
     private Score score;
     private string savePath;
+    
     // Start is called before the first frame update
     void Start()
     {
         score = GetComponent<Score>();
         savePath = Application.persistentDataPath + "/highscore.save";
+        LoadData();
+
+
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class SaveScoreScript : MonoBehaviour
         var save = new Save()
         {
             savedHighScore = score.highScore,
+            
 
         };
 
@@ -37,11 +41,14 @@ public class SaveScoreScript : MonoBehaviour
         }
 
         Debug.Log("HighScore Saved");
+       
+        
     }
 
     public void LoadData()
     {
-        if(File.Exists(savePath))
+        
+        if (File.Exists(savePath))
         {
             Save save;
 
@@ -55,9 +62,11 @@ public class SaveScoreScript : MonoBehaviour
 
             Debug.Log("Highscore Loaded");
         }
-        else
-        {
-            Debug.Log("Highscore doesnt exist");
-        }
+        
+
+           
+            
+           
+        
     }
 }

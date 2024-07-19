@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 10584249}
   - component: {fileID: 10584248}
   - component: {fileID: 10584252}
+  - component: {fileID: 10584255}
   - component: {fileID: 10584251}
   - component: {fileID: 10584250}
   - component: {fileID: 10584253}
@@ -189,6 +190,7 @@ MonoBehaviour:
   highScoreText: {fileID: 57937063}
   highScoreObject: {fileID: 2050057901}
   endScore: 0
+  highScore: 0
 --- !u!114 &10584251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +231,7 @@ MonoBehaviour:
     type: 3}
   spawnPoint: {fileID: 97020814}
   timeToSpawn: 1.55
+  obstaclesSpawned: []
 --- !u!114 &10584254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +247,18 @@ MonoBehaviour:
   creditsPanel: {fileID: 0}
   pausedPanel: {fileID: 1364791425}
   isPaused: 0
+--- !u!114 &10584255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10584247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e779febae191e4b8b1d29a97791a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &57937061
 GameObject:
   m_ObjectHideFlags: 0
@@ -2667,7 +2682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.6779785, y: 14.267029}
+  m_AnchoredPosition: {x: -11.6779785, y: 14.26709}
   m_SizeDelta: {x: -116.396126, y: -65.229}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1364791427
