@@ -64,10 +64,7 @@ public class SaveScoreScript : MonoBehaviour
 
             Debug.Log("Highscore Loaded");
         }
-        else
-        {
-            Debug.Log("HighScore not found");
-        }
+         
         
 
            
