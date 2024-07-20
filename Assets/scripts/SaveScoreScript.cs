@@ -8,13 +8,14 @@ public class SaveScoreScript : MonoBehaviour
 {
     private Score score;
     private string savePath;
-    private string championsName;
+    private string championsNamePath;
     
     // Start is called before the first frame update
     void Start()
     {
         score = GetComponent<Score>();
         savePath = Application.persistentDataPath + "/highscore.save";
+        championsNamePath = Application.persistentDataPath + "/champion.save";
         LoadData();
         
 
@@ -32,12 +33,17 @@ public class SaveScoreScript : MonoBehaviour
         var save = new Save()
         {
             savedHighScore = score.highScore,
-            ChampionName = championsName,
+            ChampionName = score.championText.text,
 
         };
 
         var binaryFormatter = new BinaryFormatter();
         using (var fileStream = File.Create(savePath))
+        {
+            binaryFormatter.Serialize(fileStream, save);
+        }
+
+        using(var fileStream = File.Create(championsNamePath))
         {
             binaryFormatter.Serialize(fileStream, save);
         }
@@ -60,12 +66,14 @@ public class SaveScoreScript : MonoBehaviour
                 save = (Save)binaryFormatter.Deserialize(fileStream);
             }
 
-            using (var fileStream = File.Open(championsName, FileMode.Open))
+            using (var fileStream = File.Open(championsNamePath, FileMode.Open))
             {
                 save =(Save)binaryFormatter.Deserialize(fileStream);
             }
 
+
             score.highScore = save.savedHighScore;
+            score.championText.text = save.ChampionName;
        
 
             Debug.Log("Highscore Loaded");
@@ -81,6 +89,6 @@ public class SaveScoreScript : MonoBehaviour
 
     public void ChampionNameInput(string s)
     {
-        s = championsName;
+        s = score.championText.text;
     }
 }
