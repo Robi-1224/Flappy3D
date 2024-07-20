@@ -9,6 +9,7 @@ public class Score : MonoBehaviour
     public int score = 0;
     [SerializeField] TextMeshProUGUI scoreTex;
     [SerializeField] TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI championText;
     [SerializeField] GameObject highScoreObject;
     public int endScore;
     public int highScore;

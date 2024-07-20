@@ -7,7 +7,7 @@ public class BackgroundLoop : MonoBehaviour
 {
 
     Vector3 startPos;
-    [SerializeField] Transform background;
+    public Transform background;
     // Start is called before the first frame update
     void Awake()
     {

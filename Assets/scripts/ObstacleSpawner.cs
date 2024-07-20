@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject obstacle;
-    [SerializeField] GameObject spawnPoint;
+    public GameObject spawnPoint;
+ 
     [SerializeField] float timeToSpawn;
-    private float timeToDestroy = 5f;
     public List<GameObject> obstaclesSpawned;
     private Vector3 randomSpawnYPos;
 
 
     private ButtonManager buttonManager;
+    private BackgroundChange backgroundChange;
     private bool hasStarted = false;
     private bool hasFinished = false;
     private bool canDestroy = true;
@@ -21,17 +21,19 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         buttonManager = FindAnyObjectByType<ButtonManager>();
+        backgroundChange = GetComponent<BackgroundChange>();
         hasStarted = false;
-       
+      
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+    
+
         if (buttonManager.isPaused)
         {
-
+            Time.timeScale = 0f;
             canDestroy = false;
 
             foreach (GameObject move in obstaclesSpawned)
@@ -45,12 +47,17 @@ public class ObstacleSpawner : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 1f;
             foreach (GameObject move in obstaclesSpawned)
             {
-                move.GetComponent<Movement>().enabled = true;
-
+                if (move)
+                {
+                    move.GetComponent<Movement>().enabled = true;
+                }
+            
             }
             hasFinished = true;
+            canDestroy = true;
         }
 
         if(hasFinished)
@@ -69,32 +76,23 @@ public class ObstacleSpawner : MonoBehaviour
         private IEnumerator SpawningObstacles()
         {
             while (true) {
-            timeToDestroy = 5;
-            timeToDestroy -= Time.deltaTime;
-          
+
+
             randomSpawnYPos = new Vector3(spawnPoint.transform.position.x, Random.Range(-5, 5), spawnPoint.transform.position.z);
-                WaitForSeconds wait = new WaitForSeconds(timeToSpawn);
-                var obstacles = Instantiate(obstacle, spawnPoint.transform.position, Quaternion.identity);
-                obstaclesSpawned.Add(obstacles);
-                obstacles.transform.position = randomSpawnYPos;
+            WaitForSeconds wait = new WaitForSeconds(timeToSpawn);
+            var obstacles = Instantiate(backgroundChange.obstacleList[backgroundChange.obstacleIndex], spawnPoint.transform.position, Quaternion.identity);
+            obstaclesSpawned.Add(obstacles);
+            obstacles.transform.position = randomSpawnYPos;
 
-                if (!buttonManager.isPaused)
-                {
-                Time.timeScale = 1;
-                if (timeToDestroy <= 0)
-                {
-                    Destroy(obstacles);
-                }
-               
-            }
-            else
+            obstacles.transform.SetParent(spawnPoint.transform);
+
+
+            if (canDestroy)
             {
-                 Time.timeScale = 0;
+                Destroy(obstacles, 5f);
             }
-                obstacles.transform.SetParent(spawnPoint.transform);
-                yield return wait;
-
-            }
+            yield return wait;
+        }
 
 
           

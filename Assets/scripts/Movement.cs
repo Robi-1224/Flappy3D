@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         Moving();
+            
     }
 
     private void Moving()
@@ -27,4 +28,5 @@ public class Movement : MonoBehaviour
     {
         obstacleSpawner.obstaclesSpawned.Remove(gameObject);
     }
+
 }

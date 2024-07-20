@@ -38,13 +38,13 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         PlayerFlapping();
-        
+
 
         if (gameOver)
         {
-             
+
             gameOverScreen.SetActive(true);
-            gameOverHighscoreText.text = "Current Highscore: "+score.highScore;
+            gameOverHighscoreText.text = score.championText +"'s" + " Highscore: " + score.highScore;
             score.endScore = score.score;
             score.HighScore();
 
@@ -81,58 +81,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        float screenBorderForce = 3000;
-
-        // top and bottom of the screen
-        if (collision.gameObject.CompareTag("ScreenBorderTop"))
-        {
-           
-            rb.AddForce(0,-screenBorderForce,0, ForceMode.Impulse);
-
-        }
-        
-        else if (collision.gameObject.CompareTag("ScreenBorderBottom"))
-        {
-           
-            rb.AddForce(-screenBorderForce, 10, 0, ForceMode.Impulse);
-            gameOver = true;
-            Destroy(gameObject, .2f);
-        }
-
-        // different kind of obstacles
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-           
-            Destroy(gameObject, .01f);
-            gameOver = true;
-        }
-        
-        if (collision.gameObject.CompareTag("ElectricObstacle"))
-        {
-            gameOver = true;
-            Destroy(gameObject,.01f);
-            
-            
-        }
-
-       
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("ScoreBox"))
-        {
-            score.ScoreUpdate(1);
-        }
-    }
-
-
-
 }
 
+  
 

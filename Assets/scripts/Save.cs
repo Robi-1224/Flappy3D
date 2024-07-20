@@ -6,6 +6,6 @@ using UnityEngine;
 public class Save 
 {
    public int savedHighScore;
-   
+   public string ChampionName;
 }        
     

@@ -8,6 +8,7 @@ public class SaveScoreScript : MonoBehaviour
 {
     private Score score;
     private string savePath;
+    private string championsName;
     
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,7 @@ public class SaveScoreScript : MonoBehaviour
         var save = new Save()
         {
             savedHighScore = score.highScore,
-            
+            ChampionName = championsName,
 
         };
 
@@ -59,17 +60,27 @@ public class SaveScoreScript : MonoBehaviour
                 save = (Save)binaryFormatter.Deserialize(fileStream);
             }
 
+            using (var fileStream = File.Open(championsName, FileMode.Open))
+            {
+                save =(Save)binaryFormatter.Deserialize(fileStream);
+            }
+
             score.highScore = save.savedHighScore;
        
 
             Debug.Log("Highscore Loaded");
         }
-         
-        
+       
 
            
             
            
         
+    }
+
+
+    public void ChampionNameInput(string s)
+    {
+        s = championsName;
     }
 }
