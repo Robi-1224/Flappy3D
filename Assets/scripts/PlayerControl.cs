@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour
         {
 
             gameOverScreen.SetActive(true);
-            gameOverHighscoreText.text = "Champion" +score.championText +"'s" + " Highscore: " + score.highScore;
+            gameOverHighscoreText.text = "Current Champion " +score.championText +"'s" + " Highscore: " + score.highScore;
             score.endScore = score.score;
             score.HighScore();
 

@@ -9,6 +9,7 @@ public class SaveScoreScript : MonoBehaviour
     private Score score;
     private string savePath;
     private string championsNamePath;
+    public bool InputName = false;
     
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class SaveScoreScript : MonoBehaviour
         var save = new Save()
         {
             savedHighScore = score.highScore,
-            ChampionName = score.championText.text,
+            ChampionName = score.championText,
 
         };
 
@@ -73,7 +74,7 @@ public class SaveScoreScript : MonoBehaviour
 
 
             score.highScore = save.savedHighScore;
-            score.championText.text = save.ChampionName;
+            score.championText = save.ChampionName;
        
 
             Debug.Log("Highscore Loaded");
@@ -89,6 +90,8 @@ public class SaveScoreScript : MonoBehaviour
 
     public void ChampionNameInput(string s)
     {
-        s = score.championText.text;
+        score.championText = s;
+        SaveData();
+        InputName = true;
     }
 }

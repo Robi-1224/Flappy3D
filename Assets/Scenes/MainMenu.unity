@@ -2698,7 +2698,10 @@ MonoBehaviour:
   creditsPanel: {fileID: 1197257520}
   pausedPanel: {fileID: 0}
   highscorePanel: {fileID: 331149730}
+  background: {fileID: 0}
   highscoreText: {fileID: 1132045616}
+  inputNameText: {fileID: 0}
+  championNameText: {fileID: 1567575993}
   isPaused: 0
 --- !u!4 &1006822046
 Transform:
@@ -2727,6 +2730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e779febae191e4b8b1d29a97791a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputName: 0
 --- !u!114 &1006822048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2742,6 +2746,7 @@ MonoBehaviour:
   score: 0
   scoreTex: {fileID: 0}
   highScoreText: {fileID: 0}
+  championText: 
   highScoreObject: {fileID: 0}
   endScore: 0
   highScore: 0
@@ -3197,14 +3202,14 @@ RectTransform:
   m_GameObject: {fileID: 1567575991}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 331149731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -465, y: -235}
+  m_AnchoredPosition: {x: -625, y: -235}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1567575993

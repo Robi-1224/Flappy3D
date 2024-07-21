@@ -14,7 +14,10 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] GameObject pausedPanel;
     [SerializeField] GameObject highscorePanel;
     [SerializeField] GameObject background;
+
     [SerializeField] TextMeshProUGUI highscoreText;
+    [SerializeField] TextMeshProUGUI inputNameText;
+    [SerializeField] TextMeshProUGUI championNameText;
 
     private PlayerControl playerControl;
     private Score score;
@@ -25,7 +28,7 @@ public class ButtonManager : MonoBehaviour
     private void Start()
     {
         playerControl = FindAnyObjectByType<PlayerControl>();
-       score = FindAnyObjectByType<Score>();
+        score = FindAnyObjectByType<Score>();
         saveScore = GetComponent<SaveScoreScript>();
       
     }
@@ -58,7 +61,14 @@ public class ButtonManager : MonoBehaviour
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (saveScore.InputName == true || score.highScoreObject.gameObject.active == false)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            inputNameText.enabled = true;
+        }
     }
 
     public void Unpause()
@@ -70,13 +80,22 @@ public class ButtonManager : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene("MainScene");
+       
+        if(saveScore.InputName == true|| score.highScoreObject.gameObject.active == false)
+        {
+            SceneManager.LoadScene("MainScene");
+        }
+        else
+        {
+            inputNameText.enabled = true;
+        }
     }
 
     public void HighScorePanel()
     {
         highscorePanel.SetActive(true);
         highscoreText.text = score.highScore + " " + "Points!";
+        championNameText.text = "Current champion "+ score.championText+ "'s "+ "Highscore: ";
     }
 
     public void HighScoreQuit()

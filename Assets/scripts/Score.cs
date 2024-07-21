@@ -9,9 +9,9 @@ public class Score : MonoBehaviour
     public int score = 0;
     [SerializeField] TextMeshProUGUI scoreTex;
     [SerializeField] TextMeshProUGUI highScoreText;
-    public TextMeshProUGUI championText;
+    public string championText;
 
-    [SerializeField] GameObject highScoreObject;
+    public GameObject highScoreObject;
     public int endScore;
     public int highScore;
     private SaveScoreScript saveScoreScript;
@@ -48,7 +48,6 @@ public class Score : MonoBehaviour
             highScore = endScore;
             highScoreObject.SetActive(true);
             playerControl.gameOverHighscoreText.enabled = false;
-            saveScoreScript.SaveData();
           
             highScoreText.text = "You have a new HighScore: " + highScore;
         }
