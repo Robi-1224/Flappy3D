@@ -91,7 +91,16 @@ public class SaveScoreScript : MonoBehaviour
     public void ChampionNameInput(string s)
     {
         score.championText = s;
-        SaveData();
-        InputName = true;
+
+        if(s == "" || s== "Enter the champions name ") {
+
+            InputName = false;
+        }
+        else
+        {
+            SaveData();
+            InputName = true;
+        }
+       
     }
 }

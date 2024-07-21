@@ -106,7 +106,7 @@ public class ButtonManager : MonoBehaviour
     public void HighScoreReset()
     {
         score.highScore = 0;
-        
+        score.championText = "";
         saveScore.SaveData();
         HighScorePanel();
     }
