@@ -22,6 +22,7 @@ public class ButtonManager : MonoBehaviour
     private PlayerControl playerControl;
     private Score score;
     private SaveScoreScript saveScore;
+
    
     public bool isPaused = false;
 
@@ -30,6 +31,7 @@ public class ButtonManager : MonoBehaviour
         playerControl = FindAnyObjectByType<PlayerControl>();
         score = FindAnyObjectByType<Score>();
         saveScore = GetComponent<SaveScoreScript>();
+     
       
     }
     private void Update()

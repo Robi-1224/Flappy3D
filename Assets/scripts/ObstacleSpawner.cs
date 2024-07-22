@@ -14,6 +14,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     private ButtonManager buttonManager;
     private BackgroundChange backgroundChange;
+    private BackgroundLoop backgroundLoop;
     private bool hasStarted = false;
     private bool hasFinished = false;
     private bool canDestroy = true;
@@ -22,6 +23,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         buttonManager = FindAnyObjectByType<ButtonManager>();
         backgroundChange = GetComponent<BackgroundChange>();
+        backgroundLoop = GetComponent<BackgroundLoop>();
         hasStarted = false;
       
     }
@@ -33,7 +35,10 @@ public class ObstacleSpawner : MonoBehaviour
 
         if (buttonManager.isPaused)
         {
-            Time.timeScale = 0f;
+            if (!backgroundLoop.timerOn)
+            {
+                Time.timeScale = 0f;
+            }
             canDestroy = false;
 
             foreach (GameObject move in obstaclesSpawned)

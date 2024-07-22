@@ -9,12 +9,13 @@ public class BackgroundLoop : MonoBehaviour
 
     Vector3 startPos;
     public Transform background;
-    [SerializeField] TextMeshProUGUI readyToFlap;
+    [SerializeField] Text readyToFlap;
     private ButtonManager buttonManager;
+
     public float timeLeft;
     public bool timerOn = false;
-
-    public Text TimerTxt;
+    
+   
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,12 +42,16 @@ public class BackgroundLoop : MonoBehaviour
             {
                 timeLeft -= Time.deltaTime;
                 updateTimer(timeLeft);
+                buttonManager.isPaused = true;
+                Time.timeScale = 1;
             }
             else
             {
                 Debug.Log("Time is UP!");
                 timeLeft = 0;
                 timerOn = false;
+                readyToFlap.enabled = false;
+                buttonManager.isPaused = false;
             }
         }
         RepeatBackground();
@@ -62,13 +67,13 @@ public class BackgroundLoop : MonoBehaviour
 
     void updateTimer(float currentTime)
     {
-        
-        currentTime -= 1;
+        currentTime += 1;
+        readyToFlap.enabled = true;
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
-        readyToFlap.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        readyToFlap.text = string.Format("Ready to flap?: "+ "{0:00}:{1:00}", minutes, seconds + "  Press Spacebar to flap!");
     }
 }
         
