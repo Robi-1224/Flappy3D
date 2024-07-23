@@ -22,17 +22,15 @@ public class ButtonManager : MonoBehaviour
     private PlayerControl playerControl;
     private Score score;
     private SaveScoreScript saveScore;
-
+  
    
     public bool isPaused = false;
-
+    private bool gameRestarted = false;
     private void Start()
     {
         playerControl = FindAnyObjectByType<PlayerControl>();
         score = FindAnyObjectByType<Score>();
         saveScore = GetComponent<SaveScoreScript>();
-     
-      
     }
     private void Update()
     {
@@ -86,6 +84,7 @@ public class ButtonManager : MonoBehaviour
         if(saveScore.InputName == true|| score.highScoreObject.gameObject.active == false)
         {
             SceneManager.LoadScene("MainScene");
+            gameRestarted = true;
         }
         else
         {

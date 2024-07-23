@@ -7,6 +7,7 @@ public class PlayerCollision : MonoBehaviour
     private PlayerControl playerControl;
     private Rigidbody rb;
     private Score score;
+    private BackgroundLoop loop;
    
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class PlayerCollision : MonoBehaviour
         playerControl = GetComponent<PlayerControl>();
         score = FindAnyObjectByType<Score>();
         rb = GetComponent<Rigidbody>();
+        loop = FindAnyObjectByType<BackgroundLoop>();
        
    
     }
@@ -34,10 +36,10 @@ public class PlayerCollision : MonoBehaviour
 
         else if (collision.gameObject.CompareTag("ScreenBorderBottom"))
         {
-
-            rb.AddForce(-screenBorderForce, 10, 0, ForceMode.Impulse);
-            playerControl.gameOver = true;
-            Destroy(gameObject, .2f);
+           
+                rb.AddForce(-screenBorderForce, 10, 0, ForceMode.Impulse);
+                playerControl.gameOver = true;
+                Destroy(gameObject, .2f);
         }
 
         // different kind of obstacles

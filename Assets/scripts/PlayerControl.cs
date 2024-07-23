@@ -15,16 +15,17 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     public TextMeshProUGUI gameOverHighscoreText;
     [SerializeField] Transform lookPoint;
+    public bool gameStarted = false;
     public bool gameOver = false;
 
     private Score score;
-    private SaveScoreScript script;
+    private ButtonManager buttonManager;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         score = FindAnyObjectByType<Score>();
-        script = FindAnyObjectByType<SaveScoreScript>();
+        buttonManager = FindAnyObjectByType<ButtonManager>();
 
         if (gameOverHighscoreText == null)
         {
@@ -39,7 +40,6 @@ public class PlayerControl : MonoBehaviour
     {
         PlayerFlapping();
 
-
         if (gameOver)
         {
 
@@ -48,6 +48,13 @@ public class PlayerControl : MonoBehaviour
             score.endScore = score.score;
             score.HighScore();
 
+        }
+
+        if (!gameStarted)
+        {
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+            buttonManager.isPaused = true;
         }
     }
 
@@ -67,9 +74,10 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-
+            gameStarted = true;
+            rb.useGravity = true;
 
             if (canFlap)
             {

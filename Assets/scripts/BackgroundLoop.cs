@@ -9,8 +9,11 @@ public class BackgroundLoop : MonoBehaviour
 
     Vector3 startPos;
     public Transform background;
-    [SerializeField] Text readyToFlap;
+    [SerializeField] TextMeshPro readyToFlap;
+    [SerializeField] TextMeshPro controlText;
+
     private ButtonManager buttonManager;
+    private PlayerControl playerControl;
 
     public float timeLeft;
     public bool timerOn = false;
@@ -26,6 +29,7 @@ public class BackgroundLoop : MonoBehaviour
     {
        startPos = background.position;
        buttonManager = GetComponent<ButtonManager>();
+       playerControl = FindAnyObjectByType<PlayerControl>();
        timerOn = true;
 
     }
@@ -34,26 +38,32 @@ public class BackgroundLoop : MonoBehaviour
     void Update()
     {
 
-        
 
-        if (timerOn)
+        if (playerControl.gameStarted)
         {
-            if (timeLeft > 0)
+
+
+            if (timerOn)
             {
-                timeLeft -= Time.deltaTime;
-                updateTimer(timeLeft);
-                buttonManager.isPaused = true;
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Debug.Log("Time is UP!");
-                timeLeft = 0;
-                timerOn = false;
-                readyToFlap.enabled = false;
-                buttonManager.isPaused = false;
+                if (timeLeft > 0)
+                {
+                    timeLeft -= Time.deltaTime;
+                    updateTimer(timeLeft);
+                    buttonManager.isPaused = true;
+                    Time.timeScale = 1;
+                }
+                else
+                {
+                    Debug.Log("Time is UP!");
+                    timeLeft = 0;
+                    timerOn = false;
+                    readyToFlap.enabled = false;
+                    controlText.enabled = false;
+                    buttonManager.isPaused = false;
+                }
             }
         }
+
         RepeatBackground();
     }
 
@@ -69,11 +79,12 @@ public class BackgroundLoop : MonoBehaviour
     {
         currentTime += 1;
         readyToFlap.enabled = true;
+        controlText.enabled = true;
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
-        readyToFlap.text = string.Format("Ready to flap?: "+ "{0:00}:{1:00}", minutes, seconds + "  Press Spacebar to flap!");
+        readyToFlap.text = string.Format("Ready to flap?: "+ "{0:00}:{1:00}", minutes, seconds );
     }
 }
         
