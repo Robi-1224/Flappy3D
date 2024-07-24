@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BackgroundLoop : MonoBehaviour
@@ -39,31 +40,8 @@ public class BackgroundLoop : MonoBehaviour
     {
 
 
-        if (playerControl.gameStarted)
-        {
 
-
-            if (timerOn)
-            {
-                if (timeLeft > 0)
-                {
-                    timeLeft -= Time.deltaTime;
-                    updateTimer(timeLeft);
-                    buttonManager.isPaused = true;
-                    Time.timeScale = 1;
-                }
-                else
-                {
-                    Debug.Log("Time is UP!");
-                    timeLeft = 0;
-                    timerOn = false;
-                    readyToFlap.enabled = false;
-                    controlText.enabled = false;
-                    buttonManager.isPaused = false;
-                }
-            }
-        }
-
+        Timer();
         RepeatBackground();
     }
 
@@ -79,12 +57,44 @@ public class BackgroundLoop : MonoBehaviour
     {
         currentTime += 1;
         readyToFlap.enabled = true;
-        controlText.enabled = true;
+        controlText.enabled = true; 
+        
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
         readyToFlap.text = string.Format("Ready to flap?: "+ "{0:00}:{1:00}", minutes, seconds );
+    }
+
+    private void Timer()
+    {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene"))
+        {
+            if (playerControl.gameStarted)
+            {
+
+
+                if (timerOn)
+                {
+                    if (timeLeft > 0)
+                    {
+                        timeLeft -= Time.deltaTime;
+                        updateTimer(timeLeft);
+                        buttonManager.isPaused = true;
+                        Time.timeScale = 1;
+                    }
+                    else
+                    {
+                        Debug.Log("Time is UP!");
+                        timeLeft = 0;
+                        timerOn = false;
+                        readyToFlap.enabled = false;
+                        controlText.enabled = false;
+                        buttonManager.isPaused = false;
+                    }
+                }
+            }
+        }
     }
 }
         

@@ -14,6 +14,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] GameObject pausedPanel;
     [SerializeField] GameObject highscorePanel;
     [SerializeField] GameObject background;
+    [SerializeField] GameObject skinPanel;
 
     [SerializeField] TextMeshProUGUI highscoreText;
     [SerializeField] TextMeshProUGUI inputNameText;
@@ -22,10 +23,9 @@ public class ButtonManager : MonoBehaviour
     private PlayerControl playerControl;
     private Score score;
     private SaveScoreScript saveScore;
-  
-   
+
+
     public bool isPaused = false;
-    private bool gameRestarted = false;
     private void Start()
     {
         playerControl = FindAnyObjectByType<PlayerControl>();
@@ -34,14 +34,26 @@ public class ButtonManager : MonoBehaviour
     }
     private void Update()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene"))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene()== SceneManager.GetSceneByName("ReloadScene"))
         {
             pauseGame();
         }
     }
+
+    public void SkinPanelActive()
+    {
+        skinPanel.SetActive(true);
+    }
+
+    public void SkinPanelDeacive()
+    {
+            skinPanel.SetActive(false);
+        
+    }
     public void GameStart()
     {
         SceneManager.LoadScene("MainScene");
+        saveScore.SaveData();
     }
 
     public void GameQuit()
@@ -83,8 +95,8 @@ public class ButtonManager : MonoBehaviour
        
         if(saveScore.InputName == true|| score.highScoreObject.gameObject.active == false)
         {
-            SceneManager.LoadScene("MainScene");
-            gameRestarted = true;
+            SceneManager.LoadScene("ReloadScene");
+            saveScore.SaveData();
         }
         else
         {

@@ -27,7 +27,7 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene")){
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("ReloadScene")){
             scoreTex.text = "Score: " + score;
         }
     }

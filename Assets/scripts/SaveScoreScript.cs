@@ -7,16 +7,21 @@ using UnityEngine;
 public class SaveScoreScript : MonoBehaviour
 {
     private Score score;
+    private SkinManager skinManager;
     private string savePath;
     private string championsNamePath;
+    private string skinIndexPath;
     public bool InputName = false;
+    private bool filesCreated = false;
     
     // Start is called before the first frame update
     void Start()
     {
         score = GetComponent<Score>();
+        skinManager = FindAnyObjectByType<SkinManager>();
         savePath = Application.persistentDataPath + "/highscore.save";
         championsNamePath = Application.persistentDataPath + "/champion.save";
+        skinIndexPath = Application.persistentDataPath + "/currentSkin.save";
         LoadData();
         
 
@@ -26,7 +31,7 @@ public class SaveScoreScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+      
     }
 
     public void SaveData()
@@ -35,6 +40,7 @@ public class SaveScoreScript : MonoBehaviour
         {
             savedHighScore = score.highScore,
             ChampionName = score.championText,
+            currentSkinIndex = skinManager.skinsIndex,
 
         };
 
@@ -45,6 +51,11 @@ public class SaveScoreScript : MonoBehaviour
         }
 
         using(var fileStream = File.Create(championsNamePath))
+        {
+            binaryFormatter.Serialize(fileStream, save);
+        }
+
+        using (var fileStream = File.Create(skinIndexPath))
         {
             binaryFormatter.Serialize(fileStream, save);
         }
@@ -72,9 +83,16 @@ public class SaveScoreScript : MonoBehaviour
                 save =(Save)binaryFormatter.Deserialize(fileStream);
             }
 
+            using (var fileStream = File.Open(skinIndexPath, FileMode.Open))
+            {
+                save = (Save)binaryFormatter.Deserialize(fileStream);
+            }
+
+            
 
             score.highScore = save.savedHighScore;
             score.championText = save.ChampionName;
+            skinManager.skinsIndex = save.currentSkinIndex;
        
 
             Debug.Log("Highscore Loaded");
