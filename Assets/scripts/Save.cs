@@ -7,6 +7,7 @@ public class Save
 {
    public int savedHighScore;
    public string ChampionName;
-    public int currentSkinIndex;
+   public int currentSkinIndex;
+   public int coinsSaved;
 }        
     

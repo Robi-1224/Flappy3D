@@ -11,8 +11,9 @@ public class SaveScoreScript : MonoBehaviour
     private string savePath;
     private string championsNamePath;
     private string skinIndexPath;
+    private string coinNamePath;
     public bool InputName = false;
-    private bool filesCreated = false;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class SaveScoreScript : MonoBehaviour
         savePath = Application.persistentDataPath + "/highscore.save";
         championsNamePath = Application.persistentDataPath + "/champion.save";
         skinIndexPath = Application.persistentDataPath + "/currentSkin.save";
+        coinNamePath = Application.persistentDataPath + "/coins.save";
         LoadData();
         
 
