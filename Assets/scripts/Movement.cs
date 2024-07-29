@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
     private void OnDestroy()
     {
         obstacleSpawner.obstaclesSpawned.Remove(gameObject);
+        obstacleSpawner.coinsSpawned.Remove(gameObject);
     }
 
 }

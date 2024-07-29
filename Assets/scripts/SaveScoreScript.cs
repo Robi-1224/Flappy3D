@@ -43,6 +43,7 @@ public class SaveScoreScript : MonoBehaviour
             savedHighScore = score.highScore,
             ChampionName = score.championText,
             currentSkinIndex = skinManager.skinsIndex,
+            coinsSaved = score.coinsCollected,
 
         };
 
@@ -62,6 +63,10 @@ public class SaveScoreScript : MonoBehaviour
             binaryFormatter.Serialize(fileStream, save);
         }
 
+        using (var fileStream = File.Create(coinNamePath))
+        {
+            binaryFormatter.Serialize(fileStream, save);
+        }
         Debug.Log("HighScore Saved");
        
         
@@ -90,12 +95,15 @@ public class SaveScoreScript : MonoBehaviour
                 save = (Save)binaryFormatter.Deserialize(fileStream);
             }
 
-            
+            using (var fileStream = File.Open(coinNamePath, FileMode.Open))
+            {
+                save = (Save)binaryFormatter.Deserialize(fileStream);
+            }
 
             score.highScore = save.savedHighScore;
             score.championText = save.ChampionName;
             skinManager.skinsIndex = save.currentSkinIndex;
-       
+            score.coinsCollected = save.coinsSaved;
 
             Debug.Log("Highscore Loaded");
         }

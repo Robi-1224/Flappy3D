@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,7 +46,7 @@ public class BackgroundChange : MonoBehaviour
     {
         obstacleList[obstacleIndex].transform.position = spawnPoint.position;
         BackgroundUpdate();
-       
+        
         
     }
 

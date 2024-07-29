@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class Score : MonoBehaviour
 {
     public int score = 0;
+    public int coinsCollected;
     [SerializeField] TextMeshProUGUI scoreTex;
     [SerializeField] TextMeshProUGUI highScoreText;
+    [SerializeField] TextMeshProUGUI currentcoinText;
     public string championText;
 
     public GameObject highScoreObject;
@@ -16,11 +18,15 @@ public class Score : MonoBehaviour
     public int highScore;
     private SaveScoreScript saveScoreScript;
     private PlayerControl playerControl;
+    private ObstacleSpawner obstacleSpawner;
+
+
     // Start is called before the first frame update
     void Start()
     {
         saveScoreScript = FindAnyObjectByType<SaveScoreScript>();
         playerControl = FindAnyObjectByType<PlayerControl>();
+        obstacleSpawner = FindAnyObjectByType<ObstacleSpawner>();
         saveScoreScript.LoadData();
     }
 
@@ -30,6 +36,7 @@ public class Score : MonoBehaviour
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("ReloadScene")){
             scoreTex.text = "Score: " + score;
         }
+        currentcoinText.text = "Current coins: " + coinsCollected;
     }
        
 

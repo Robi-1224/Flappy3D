@@ -11,6 +11,10 @@ TagManager:
   - Obstacle
   - ElectricObstacle
   - ScoreBox
+  - FireObstacle
+  - IceObstacle
+  - Coin
+  - Coin spawn point
   layers:
   - Default
   - TransparentFX

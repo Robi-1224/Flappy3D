@@ -3,26 +3,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using TMPro;
 
 public class SkinManager : MonoBehaviour
 {
-    public GameObject[] skins;
+    public List<GameObject> skins;
+    public List<GameObject> unlockedSkins;
     public int skinsIndex =0;
 
     public MeshRenderer currentSkin;
-    
+    private Score score;
+    private UnlockedCheck unlockedCheck;
     public List<GameObject> lastSkinList = new List<GameObject>();
-    
+    public TextMeshProUGUI amountText;
 
     // Update is called once per frame
     void Update()
     {
-       
+      
         
 
     }
     private void Start()
     {
+        score = FindAnyObjectByType<Score>();
+        unlockedCheck = FindAnyObjectByType<UnlockedCheck>();
+        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
         if (skins[skinsIndex].GetComponent<MeshFilter>() != null)
         {
 
@@ -45,6 +52,7 @@ public class SkinManager : MonoBehaviour
     {
         skinsIndex++;
 
+        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
         if (skinsIndex > 27)
         {
             skinsIndex = 0;
@@ -73,8 +81,8 @@ public class SkinManager : MonoBehaviour
     public void BackSkin()
     {
 
-        
-        if(skinsIndex < 0) 
+        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
+        if (skinsIndex < 0) 
         {
             skinsIndex = 0;
         }
@@ -98,7 +106,24 @@ public class SkinManager : MonoBehaviour
             currentSkin.GetComponent<MeshRenderer>().material = skins[skinsIndex].GetComponentInChildren<MeshRenderer>().material;
         }
        
-       
+      
+    }
+
+    public void UnlockCheck(int amount)
+    {
+        if(score.coinsCollected >= amount)
+        {
+            if (skins[skinsIndex] != null)
+            {
+                unlockedSkins.Add(skins[skinsIndex]);
+                Debug.Log("unlocked");
+            }
+        }
+        else
+        {
+            unlockedCheck.unlcocked = false;
+            Debug.Log("not unlocked");
+        }
     }
 }
 

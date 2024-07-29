@@ -6,9 +6,12 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
     public GameObject spawnPoint;
+    public int spawnedCoinIndex =-1;
  
     [SerializeField] float timeToSpawn;
     public List<GameObject> obstaclesSpawned;
+    public List<GameObject> coinsSpawned;
+    public GameObject coin;
     private Vector3 randomSpawnYPos;
 
 
@@ -31,7 +34,7 @@ public class ObstacleSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+       
 
         if (buttonManager.isPaused)
         {
@@ -46,6 +49,12 @@ public class ObstacleSpawner : MonoBehaviour
                 move.GetComponent<Movement>().enabled = false;
 
             }
+
+            foreach (GameObject move in coinsSpawned)
+            {
+                move.GetComponent <Movement>().enabled = false;
+            }
+            
             StopAllCoroutines();
             hasStarted = false;
             hasFinished = false;
@@ -61,6 +70,15 @@ public class ObstacleSpawner : MonoBehaviour
                 }
             
             }
+
+            foreach (GameObject move in coinsSpawned)
+            {
+                if (move)
+                {
+                    move.GetComponent<Movement>().enabled = true;
+                }
+            }
+
             hasFinished = true;
             canDestroy = true;
         }
@@ -71,6 +89,7 @@ public class ObstacleSpawner : MonoBehaviour
             {
                 hasStarted = true;
                 StartCoroutine(SpawningObstacles());
+                StartCoroutine(SpawningCoins());
             }
         }
     } 
@@ -86,12 +105,12 @@ public class ObstacleSpawner : MonoBehaviour
             randomSpawnYPos = new Vector3(spawnPoint.transform.position.x, Random.Range(-5, 5), spawnPoint.transform.position.z);
             WaitForSeconds wait = new WaitForSeconds(timeToSpawn);
             var obstacles = Instantiate(backgroundChange.obstacleList[backgroundChange.obstacleIndex], spawnPoint.transform.position, Quaternion.identity);
+           
             obstaclesSpawned.Add(obstacles);
+            
+
             obstacles.transform.position = randomSpawnYPos;
-
             obstacles.transform.SetParent(spawnPoint.transform);
-
-
             if (canDestroy)
             {
                 Destroy(obstacles, 5f);
@@ -104,6 +123,20 @@ public class ObstacleSpawner : MonoBehaviour
 
         }
 
-
+    private IEnumerator SpawningCoins()
+    {
+        while (true)
+        {
+            WaitForSeconds wait = new WaitForSeconds(2);
+            var coins = Instantiate(coin, backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>().gameObject.transform.position, Quaternion.identity);
+            coinsSpawned.Add(coins);
+            coins.transform.SetParent(backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>(true).gameObject.transform);
+            if (canDestroy)
+            {
+                Destroy(coins, 4f);
+            }
+            yield return wait;
+        }
+    }
     
 }

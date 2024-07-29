@@ -8,6 +8,7 @@ public class PlayerCollision : MonoBehaviour
     private Rigidbody rb;
     private Score score;
     private BackgroundLoop loop;
+    private ObstacleSpawner obstacleSpawner;
    
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class PlayerCollision : MonoBehaviour
         score = FindAnyObjectByType<Score>();
         rb = GetComponent<Rigidbody>();
         loop = FindAnyObjectByType<BackgroundLoop>();
-       
+        obstacleSpawner = FindAnyObjectByType<ObstacleSpawner>();
    
     }
 
@@ -80,6 +81,12 @@ public class PlayerCollision : MonoBehaviour
         if (other.gameObject.CompareTag("ScoreBox"))
         {
             score.ScoreUpdate(1);
+        }
+
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            score.coinsCollected++;
+            Destroy(obstacleSpawner.coinsSpawned[obstacleSpawner.spawnedCoinIndex]);
         }
     }
 

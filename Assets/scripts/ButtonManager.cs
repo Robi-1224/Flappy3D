@@ -23,14 +23,18 @@ public class ButtonManager : MonoBehaviour
     private PlayerControl playerControl;
     private Score score;
     private SaveScoreScript saveScore;
-
+    private UnlockedCheck check;
+    private SkinManager skinManager;
 
     public bool isPaused = false;
+    public bool skinUnlocked = false;
     private void Start()
     {
         playerControl = FindAnyObjectByType<PlayerControl>();
         score = FindAnyObjectByType<Score>();
         saveScore = GetComponent<SaveScoreScript>();
+        check = FindAnyObjectByType<UnlockedCheck>();
+        skinManager = FindAnyObjectByType<SkinManager>();
     }
     private void Update()
     {
@@ -104,6 +108,17 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
+    public void PurchaseButton()
+    {
+        if (skinManager.skins[skinManager.skinsIndex].gameObject != null)
+        {
+            skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().UnlockingSkin();
+        }
+        else
+        {
+            Debug.Log("already unlocked");
+        }
+    }
     public void HighScorePanel()
     {
         highscorePanel.SetActive(true);
