@@ -18,6 +18,7 @@ public class SkinManager : MonoBehaviour
     public List<GameObject> lastSkinList = new List<GameObject>();
     public TextMeshProUGUI amountText;
 
+
     // Update is called once per frame
     void Update()
     {
@@ -123,6 +124,7 @@ public class SkinManager : MonoBehaviour
         {
             unlockedCheck.unlcocked = false;
             Debug.Log("not unlocked");
+          
         }
     }
 }

@@ -25,6 +25,7 @@ public class ButtonManager : MonoBehaviour
     private SaveScoreScript saveScore;
     private UnlockedCheck check;
     private SkinManager skinManager;
+    private UnlockedCheck unlockedCheck;
 
     public bool isPaused = false;
     public bool skinUnlocked = false;
@@ -35,6 +36,7 @@ public class ButtonManager : MonoBehaviour
         saveScore = GetComponent<SaveScoreScript>();
         check = FindAnyObjectByType<UnlockedCheck>();
         skinManager = FindAnyObjectByType<SkinManager>();
+        unlockedCheck = FindAnyObjectByType<UnlockedCheck>() ;
     }
     private void Update()
     {
@@ -110,9 +112,10 @@ public class ButtonManager : MonoBehaviour
 
     public void PurchaseButton()
     {
-        if (skinManager.skins[skinManager.skinsIndex].gameObject != null)
+        if (!unlockedCheck.unlcocked)
         {
             skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().UnlockingSkin();
+            unlockedCheck.unlcocked = true;
         }
         else
         {
