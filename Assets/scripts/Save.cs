@@ -10,6 +10,6 @@ public class Save
    public string ChampionName;
    public int currentSkinIndex;
    public int coinsSaved;
-    public bool ownedSkin;
+   public List<GameObject> ownedSkin;
 }        
     

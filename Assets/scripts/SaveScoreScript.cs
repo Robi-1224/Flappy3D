@@ -48,7 +48,7 @@ public class SaveScoreScript : MonoBehaviour
             ChampionName = score.championText,
             currentSkinIndex = skinManager.skinsIndex,
             coinsSaved = score.coinsCollected,
-            ownedSkin = skinManager.skins[],
+            ownedSkin = skinManager.unlockedSkins,
 
         };
 
@@ -118,7 +118,7 @@ public class SaveScoreScript : MonoBehaviour
             score.championText = save.ChampionName;
             skinManager.skinsIndex = save.currentSkinIndex;
             score.coinsCollected = save.coinsSaved;
-            skinManager.unlockedSkins = save.ownedSkins;
+            skinManager.unlockedSkins = save.ownedSkin;
 
             Debug.Log("Highscore Loaded");
         }

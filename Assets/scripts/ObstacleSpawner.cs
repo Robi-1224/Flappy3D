@@ -12,6 +12,9 @@ public class ObstacleSpawner : MonoBehaviour
     public List<GameObject> obstaclesSpawned;
     public List<GameObject> coinsSpawned;
     public GameObject coin;
+    GameObject obstacles;
+
+
     private Vector3 randomSpawnYPos;
 
 
@@ -28,14 +31,16 @@ public class ObstacleSpawner : MonoBehaviour
         backgroundChange = GetComponent<BackgroundChange>();
         backgroundLoop = GetComponent<BackgroundLoop>();
         hasStarted = false;
-      
+     
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
 
+    
         if (buttonManager.isPaused)
         {
             if (!backgroundLoop.timerOn)
@@ -104,13 +109,14 @@ public class ObstacleSpawner : MonoBehaviour
 
             randomSpawnYPos = new Vector3(spawnPoint.transform.position.x, Random.Range(-5, 5), spawnPoint.transform.position.z);
             WaitForSeconds wait = new WaitForSeconds(timeToSpawn);
-            var obstacles = Instantiate(backgroundChange.obstacleList[backgroundChange.obstacleIndex], spawnPoint.transform.position, Quaternion.identity);
+             obstacles = Instantiate(backgroundChange.obstacleList[backgroundChange.obstacleIndex], spawnPoint.transform.position, Quaternion.identity);
            
             obstaclesSpawned.Add(obstacles);
             
 
             obstacles.transform.position = randomSpawnYPos;
             obstacles.transform.SetParent(spawnPoint.transform);
+            
             if (canDestroy)
             {
                 Destroy(obstacles, 5f);
@@ -127,10 +133,11 @@ public class ObstacleSpawner : MonoBehaviour
     {
         while (true)
         {
+            GameObject coins;
             WaitForSeconds wait = new WaitForSeconds(2);
-            var coins = Instantiate(coin, backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>().gameObject.transform.position, Quaternion.identity);
+            coins = Instantiate(coin, backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>().gameObject.transform.position, Quaternion.identity);
             coinsSpawned.Add(coins);
-            coins.transform.SetParent(backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>(true).gameObject.transform);
+            coins.transform.parent = obstacles.GetComponentInChildren<Rigidbody>().gameObject.transform;
             if (canDestroy)
             {
                 Destroy(coins, 4f);
