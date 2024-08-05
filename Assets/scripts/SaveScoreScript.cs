@@ -8,10 +8,12 @@ public class SaveScoreScript : MonoBehaviour
 {
     private Score score;
     private SkinManager skinManager;
+    private UnlockedCheck check;
     private string savePath;
     private string championsNamePath;
     private string skinIndexPath;
     private string coinNamePath;
+    private string ownedSkinsPath;
     public bool InputName = false;
     
     
@@ -20,10 +22,12 @@ public class SaveScoreScript : MonoBehaviour
     {
         score = GetComponent<Score>();
         skinManager = FindAnyObjectByType<SkinManager>();
+        check = FindAnyObjectByType<UnlockedCheck>();
         savePath = Application.persistentDataPath + "/highscore.save";
         championsNamePath = Application.persistentDataPath + "/champion.save";
         skinIndexPath = Application.persistentDataPath + "/currentSkin.save";
         coinNamePath = Application.persistentDataPath + "/coins.save";
+        ownedSkinsPath = Application.persistentDataPath + "/ownedSkins.save";
         LoadData();
         
 
@@ -44,13 +48,15 @@ public class SaveScoreScript : MonoBehaviour
             ChampionName = score.championText,
             currentSkinIndex = skinManager.skinsIndex,
             coinsSaved = score.coinsCollected,
+            ownedSkin = skinManager.skins[],
 
         };
 
         var binaryFormatter = new BinaryFormatter();
+
         using (var fileStream = File.Create(savePath))
         {
-            binaryFormatter.Serialize(fileStream, save);
+           binaryFormatter.Serialize(fileStream, save);
         }
 
         using(var fileStream = File.Create(championsNamePath))
@@ -66,6 +72,10 @@ public class SaveScoreScript : MonoBehaviour
         using (var fileStream = File.Create(coinNamePath))
         {
             binaryFormatter.Serialize(fileStream, save);
+        }
+        using (var fileStream = File.Create(ownedSkinsPath))
+        {
+           binaryFormatter.Serialize(fileStream, save);
         }
         Debug.Log("HighScore Saved");
        
@@ -99,11 +109,16 @@ public class SaveScoreScript : MonoBehaviour
             {
                 save = (Save)binaryFormatter.Deserialize(fileStream);
             }
+           using (var fileStream = File.Open(ownedSkinsPath, FileMode.Open))
+            {
+                save = (Save)binaryFormatter.Deserialize(fileStream);
+            }
 
             score.highScore = save.savedHighScore;
             score.championText = save.ChampionName;
             skinManager.skinsIndex = save.currentSkinIndex;
             score.coinsCollected = save.coinsSaved;
+            skinManager.unlockedSkins = save.ownedSkins;
 
             Debug.Log("Highscore Loaded");
         }

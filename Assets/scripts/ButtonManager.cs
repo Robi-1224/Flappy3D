@@ -112,10 +112,10 @@ public class ButtonManager : MonoBehaviour
 
     public void PurchaseButton()
     {
-        if (!unlockedCheck.unlcocked)
+        if (!skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked)
         {
             skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().UnlockingSkin();
-            unlockedCheck.unlcocked = true;
+           
         }
         else
         {

@@ -5,6 +5,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
+using SgLib;
 
 public class SkinManager : MonoBehaviour
 {
@@ -15,22 +16,21 @@ public class SkinManager : MonoBehaviour
     public MeshRenderer currentSkin;
     private Score score;
     private UnlockedCheck unlockedCheck;
-    public List<GameObject> lastSkinList = new List<GameObject>();
     public TextMeshProUGUI amountText;
 
 
     // Update is called once per frame
     void Update()
     {
-      
-        
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenu")){
+            amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
+        }
 
     }
     private void Start()
     {
         score = FindAnyObjectByType<Score>();
         unlockedCheck = FindAnyObjectByType<UnlockedCheck>();
-        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
         if (skins[skinsIndex].GetComponent<MeshFilter>() != null)
         {
 
@@ -51,13 +51,16 @@ public class SkinManager : MonoBehaviour
     }
     public void NextSkin()
     {
-        skinsIndex++;
 
-        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
-        if (skinsIndex > 27)
+        if (skinsIndex == 27)
         {
             skinsIndex = 0;
         }
+        else
+        {
+            skinsIndex++;
+        }
+
     
         if (skins[skinsIndex].GetComponent<MeshFilter>() != null)
         {
@@ -82,13 +85,18 @@ public class SkinManager : MonoBehaviour
     public void BackSkin()
     {
 
-        amountText.text = "Cost: " + skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().coinCost;
-        if (skinsIndex < 0) 
+        
+        if (skinsIndex == 0)
         {
-            skinsIndex = 0;
+            skinsIndex = 27;
         }
-
-        skinsIndex--;
+        else
+        {
+            skinsIndex--;
+          
+        }
+      
+      
         if (skins[skinsIndex].GetComponent<MeshFilter>() != null) { 
 
             currentSkin.GetComponent<MeshFilter>().mesh = skins[skinsIndex].GetComponent<MeshFilter>().mesh;
@@ -117,12 +125,12 @@ public class SkinManager : MonoBehaviour
             if (skins[skinsIndex] != null)
             {
                 unlockedSkins.Add(skins[skinsIndex]);
+                skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked = true;
                 Debug.Log("unlocked");
             }
         }
         else
         {
-            unlockedCheck.unlcocked = false;
             Debug.Log("not unlocked");
           
         }
