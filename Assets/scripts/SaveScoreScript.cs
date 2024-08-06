@@ -30,7 +30,7 @@ public class SaveScoreScript : MonoBehaviour
         ownedSkinsPath = Application.persistentDataPath + "/ownedSkins.save";
         LoadData();
         
-
+        
 
     }
 

@@ -7,6 +7,7 @@ public class UnlockedCheck : MonoBehaviour
     public int coinCost;
     private SkinManager skinManager;
     public bool unlcocked = false;
+   
     // Start is called before the first frame update
     void Start()
     {

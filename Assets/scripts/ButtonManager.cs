@@ -26,7 +26,7 @@ public class ButtonManager : MonoBehaviour
     private UnlockedCheck check;
     private SkinManager skinManager;
     private UnlockedCheck unlockedCheck;
-
+    private GameObject[] objects;
     public bool isPaused = false;
     public bool skinUnlocked = false;
     private void Start()
@@ -37,6 +37,20 @@ public class ButtonManager : MonoBehaviour
         check = FindAnyObjectByType<UnlockedCheck>();
         skinManager = FindAnyObjectByType<SkinManager>();
         unlockedCheck = FindAnyObjectByType<UnlockedCheck>() ;
+
+        if (skinManager.unlockedSkins.Count > 0)
+        {
+            foreach (string tag in skinManager.unlockedSkins)
+            {
+
+                objects = GameObject.FindGameObjectsWithTag(tag);
+                foreach (GameObject obj in objects)
+                {
+                    gameObject.GetComponent<UnlockedCheck>().unlcocked = true;
+                }
+
+            }
+        }
     }
     private void Update()
     {
@@ -115,6 +129,7 @@ public class ButtonManager : MonoBehaviour
         if (!skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked)
         {
             skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().UnlockingSkin();
+            saveScore.SaveData();
            
         }
         else

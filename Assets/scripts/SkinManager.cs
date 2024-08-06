@@ -10,7 +10,8 @@ using SgLib;
 public class SkinManager : MonoBehaviour
 {
     public List<GameObject> skins;
-    public List<GameObject> unlockedSkins;
+    public List<string> unlockedSkins ;
+
     public int skinsIndex =0;
 
     public MeshRenderer currentSkin;
@@ -52,7 +53,7 @@ public class SkinManager : MonoBehaviour
     public void NextSkin()
     {
 
-        if (skinsIndex == 27)
+        if (skinsIndex == 2)
         {
             skinsIndex = 0;
         }
@@ -124,7 +125,7 @@ public class SkinManager : MonoBehaviour
         {
             if (skins[skinsIndex] != null)
             {
-                unlockedSkins.Add(skins[skinsIndex]);
+                unlockedSkins.Add(skins[skinsIndex].gameObject.tag);
                 skins[skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked = true;
                 Debug.Log("unlocked");
             }
