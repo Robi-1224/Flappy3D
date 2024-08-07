@@ -15,10 +15,13 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] GameObject highscorePanel;
     [SerializeField] GameObject background;
     [SerializeField] GameObject skinPanel;
+    [SerializeField] GameObject equipButton;
+    [SerializeField] GameObject purchaseButton;
 
     [SerializeField] TextMeshProUGUI highscoreText;
     [SerializeField] TextMeshProUGUI inputNameText;
     [SerializeField] TextMeshProUGUI championNameText;
+    [SerializeField] TextMeshProUGUI ownedText;
 
     private PlayerControl playerControl;
     private Score score;
@@ -26,7 +29,7 @@ public class ButtonManager : MonoBehaviour
     private UnlockedCheck check;
     private SkinManager skinManager;
     private UnlockedCheck unlockedCheck;
-    private GameObject[] objects;
+    public GameObject[] objects;
     public bool isPaused = false;
     public bool skinUnlocked = false;
     private void Start()
@@ -38,26 +41,36 @@ public class ButtonManager : MonoBehaviour
         skinManager = FindAnyObjectByType<SkinManager>();
         unlockedCheck = FindAnyObjectByType<UnlockedCheck>() ;
 
-        if (skinManager.unlockedSkins.Count > 0)
-        {
-            foreach (string tag in skinManager.unlockedSkins)
-            {
-
-                objects = GameObject.FindGameObjectsWithTag(tag);
-                foreach (GameObject obj in objects)
-                {
-                    gameObject.GetComponent<UnlockedCheck>().unlcocked = true;
-                }
-
-            }
-        }
+        
     }
     private void Update()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene()== SceneManager.GetSceneByName("ReloadScene"))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("ReloadScene"))
         {
             pauseGame();
         }
+        else
+        {
+            if (!skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked)
+            {
+                purchaseButton.SetActive(true);
+                equipButton.SetActive(false);
+                skinManager.amountText.enabled = true;
+                ownedText.enabled = false;
+            }
+            else
+            {
+                equipButton.SetActive(true);
+                purchaseButton.SetActive(false);
+                ownedText.enabled = true;
+                skinManager.amountText.enabled = false;
+            }
+        }
+
+       
+         
+        
+
     }
 
     public void SkinPanelActive()
@@ -72,8 +85,17 @@ public class ButtonManager : MonoBehaviour
     }
     public void GameStart()
     {
-        SceneManager.LoadScene("MainScene");
-        saveScore.SaveData();
+        if (skinManager.currentSkinOwned)
+        {
+
+
+            SceneManager.LoadScene("MainScene");
+            saveScore.SaveData();
+        }
+        else
+        {
+            Debug.Log("You need to equip a bird!");
+        }
     }
 
     public void GameQuit()
@@ -129,13 +151,22 @@ public class ButtonManager : MonoBehaviour
         if (!skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked)
         {
             skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().UnlockingSkin();
+          
             saveScore.SaveData();
            
         }
         else
         {
             Debug.Log("already unlocked");
+           
         }
+    }
+
+    public void EquipButton()
+    {
+        skinManager.currentSkinOwned = skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked;
+       
+
     }
     public void HighScorePanel()
     {

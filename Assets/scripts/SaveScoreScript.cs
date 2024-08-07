@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -15,8 +16,9 @@ public class SaveScoreScript : MonoBehaviour
     private string coinNamePath;
     private string ownedSkinsPath;
     public bool InputName = false;
-    
-    
+   
+    private GameObject[] objects;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +31,20 @@ public class SaveScoreScript : MonoBehaviour
         coinNamePath = Application.persistentDataPath + "/coins.save";
         ownedSkinsPath = Application.persistentDataPath + "/ownedSkins.save";
         LoadData();
-        
-        
+        if (skinManager.unlockedSkins.Count > 0)
+        {
+            foreach (string tag in skinManager.unlockedSkins)
+            {
+
+                objects = GameObject.FindGameObjectsWithTag(tag);
+                foreach (GameObject obj in objects)
+                {
+                    obj.GetComponent<UnlockedCheck>().unlcocked = true;
+                }
+
+            }
+        }
+
 
     }
 
@@ -145,5 +159,10 @@ public class SaveScoreScript : MonoBehaviour
             InputName = true;
         }
        
+    }
+
+    public void AddtagList()
+    {
+        //unlockedSkins.Add(skinManager.skins[skinManager.skinsIndex].gameObject.tag);
     }
 }
