@@ -51,6 +51,7 @@ public class ButtonManager : MonoBehaviour
         }
         else
         {
+            skinManager.currentSkinOwned = skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked;
             if (!skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked)
             {
                 purchaseButton.SetActive(true);
@@ -67,9 +68,10 @@ public class ButtonManager : MonoBehaviour
             }
         }
 
-       
-         
         
+       
+
+
 
     }
 

@@ -17,7 +17,7 @@ public class SaveScoreScript : MonoBehaviour
     private string ownedSkinsPath;
     public bool InputName = false;
    
-    private GameObject[] objects;
+    [SerializeField] GameObject[] objects;
 
     // Start is called before the first frame update
     void Start()
@@ -31,19 +31,9 @@ public class SaveScoreScript : MonoBehaviour
         coinNamePath = Application.persistentDataPath + "/coins.save";
         ownedSkinsPath = Application.persistentDataPath + "/ownedSkins.save";
         LoadData();
-        if (skinManager.unlockedSkins.Count > 0)
-        {
-            foreach (string tag in skinManager.unlockedSkins)
-            {
-
-                objects = GameObject.FindGameObjectsWithTag(tag);
-                foreach (GameObject obj in objects)
-                {
-                    obj.GetComponent<UnlockedCheck>().unlcocked = true;
-                }
-
-            }
-        }
+        
+        
+          
 
 
     }
@@ -51,7 +41,18 @@ public class SaveScoreScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        foreach (string tag in skinManager.unlockedSkins)
+        {
+
+            objects=GameObject.FindGameObjectsWithTag(tag);
+            
+            foreach (GameObject obj in objects)
+            {
+                obj.GetComponent<UnlockedCheck>().unlcocked = true;
+            }
+
+        }
+
     }
 
     public void SaveData()

@@ -20,6 +20,7 @@ public class SkinManager : MonoBehaviour
     private SaveScoreScript saveScore;
     private UnlockedCheck unlockedCheck;
     public TextMeshProUGUI amountText;
+    
 
 
     // Update is called once per frame
