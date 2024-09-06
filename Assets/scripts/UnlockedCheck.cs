@@ -8,6 +8,7 @@ public class UnlockedCheck : MonoBehaviour
     private SkinManager skinManager;
     private Score score;
     public bool unlcocked = false;
+    public bool equipped;
    
     // Start is called before the first frame update
     void Start()

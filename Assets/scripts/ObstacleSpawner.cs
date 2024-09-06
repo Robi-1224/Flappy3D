@@ -134,7 +134,7 @@ public class ObstacleSpawner : MonoBehaviour
         while (true)
         {
             GameObject coins;
-            WaitForSeconds wait = new WaitForSeconds(2);
+            WaitForSeconds wait = new WaitForSeconds(6);
             coins = Instantiate(coin, backgroundChange.obstacleList[backgroundChange.obstacleIndex].GetComponentInChildren<Rigidbody>().gameObject.transform.position, Quaternion.identity);
             coinsSpawned.Add(coins);
             coins.transform.parent = obstacles.GetComponentInChildren<Rigidbody>().gameObject.transform;

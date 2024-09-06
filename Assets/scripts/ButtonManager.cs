@@ -1,10 +1,9 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using System.Collections;
+
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 [RequireComponent(typeof(SaveScoreScript))]
 
@@ -22,6 +21,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI inputNameText;
     [SerializeField] TextMeshProUGUI championNameText;
     [SerializeField] TextMeshProUGUI ownedText;
+    [SerializeField] TextMeshProUGUI youNeedToEquipText;
 
     private PlayerControl playerControl;
     private Score score;
@@ -34,6 +34,7 @@ public class ButtonManager : MonoBehaviour
     public bool skinUnlocked = false;
     private void Start()
     {
+     
         playerControl = FindAnyObjectByType<PlayerControl>();
         score = FindAnyObjectByType<Score>();
         saveScore = GetComponent<SaveScoreScript>();
@@ -96,7 +97,9 @@ public class ButtonManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("You need to equip a bird!");
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenu")){
+                youNeedToEquipText.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -167,7 +170,7 @@ public class ButtonManager : MonoBehaviour
     public void EquipButton()
     {
         skinManager.currentSkinOwned = skinManager.skins[skinManager.skinsIndex].gameObject.GetComponent<UnlockedCheck>().unlcocked;
-       
+        youNeedToEquipText.gameObject.SetActive(false);
 
     }
     public void HighScorePanel()
@@ -222,4 +225,5 @@ public class ButtonManager : MonoBehaviour
                
             }
     }
+
 }

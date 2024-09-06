@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("ReloadScene")){
             scoreTex.text = "Score: " + score;
         }
-        currentcoinText.text = "Current coins: " + coinsCollected;
+        currentcoinText.text = "Coins: " + coinsCollected;
     }
        
 

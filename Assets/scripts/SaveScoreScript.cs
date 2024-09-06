@@ -25,6 +25,7 @@ public class SaveScoreScript : MonoBehaviour
         score = GetComponent<Score>();
         skinManager = FindAnyObjectByType<SkinManager>();
         check = FindAnyObjectByType<UnlockedCheck>();
+
         savePath = Application.persistentDataPath + "/highscore.save";
         championsNamePath = Application.persistentDataPath + "/champion.save";
         skinIndexPath = Application.persistentDataPath + "/currentSkin.save";

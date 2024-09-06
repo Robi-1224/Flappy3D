@@ -9,7 +9,8 @@ public class PlayerCollision : MonoBehaviour
     private Score score;
     private BackgroundLoop loop;
     private ObstacleSpawner obstacleSpawner;
-   
+    private FlashBang flash;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class PlayerCollision : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         loop = FindAnyObjectByType<BackgroundLoop>();
         obstacleSpawner = FindAnyObjectByType<ObstacleSpawner>();
+       flash = FindAnyObjectByType<FlashBang>();
    
     }
 
@@ -53,9 +55,10 @@ public class PlayerCollision : MonoBehaviour
 
      else   if (collision.gameObject.CompareTag("ElectricObstacle"))
         {
+            flash.canFlash = true;
             playerControl.gameOver = true;
             Destroy(gameObject, .1f);
-
+          
 
         }
 
@@ -63,7 +66,7 @@ public class PlayerCollision : MonoBehaviour
         {
             playerControl.gameOver = true;
             Destroy(gameObject, 0.1f);
-
+           
         }
       else  if (collision.gameObject.CompareTag("IceObstacle"))
         {
