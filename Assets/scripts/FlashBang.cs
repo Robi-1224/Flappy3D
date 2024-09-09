@@ -30,7 +30,7 @@ public class FlashBang : MonoBehaviour
             yield return new WaitForSeconds(.1f);
             
             }
-         
+        Destroy(flashPanel);
     }
   
 }
